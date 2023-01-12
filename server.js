@@ -8,6 +8,15 @@ const db = mysql.createConnection({
     database: "employee_db",
 });
 
+const chooseAll = async (table, show) => {
+    const results = await db.promise().query('SELECT * FROM ' + table);
+    if (show) {
+        console.table(results[0]);
+        return init();
+    };
+    return results;
+};
+
 const insert = (table, data) => {
     db.query('INSERT INTO ?? SET ?', [table, data], (err) => {
         if (err) return console.error(err);
@@ -52,25 +61,16 @@ const insertEmployee = async () => {
 
 const choices = (selection) => {
     switch (selection) {
-        case 'VIEW ALL EMPLOYEES': {
-            db.query('SELECT * FROM employee', (err, employees) => {
-                console.table(employees);
-                init();
-            });
+        case 'View All Employees': {
+            chooseAll('employee', true);
             break;
         }
-        case 'VIEW ALL DEPARTMENTS': {
-            db.query('SELECT * FROM department', (err, departments) => {
-                console.table(departments);
-                init();
-            });
+        case 'View All Departments': {
+            chooseAll('department', true);
             break;
         }
-        case 'VIEW ALL ROLES': {
-            db.query('SELECT * FROM role', (err, roles) => {
-                console.table(roles);
-                init();
-            });
+        case 'View All Roles': {
+            chooseAll('role', true);
             break;
         }
         case 'Add Employee': {

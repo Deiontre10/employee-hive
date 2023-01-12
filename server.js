@@ -16,8 +16,42 @@ const insert = (table, data) => {
     });
 };
 
-const choices = (something) => {
-    switch (something) {
+const selectNames = (table, name, value) => {
+    return db.promise().query('SELECT ?? AS name, ?? AS value FROM ??', [name, value, table]);
+};
+
+const insertEmployee = async () => {
+    const [managers] = await selectNames('employee', 'last_name', 'id');
+    const [roles] = await selectNames('role', 'title', 'id');
+    prompt([
+        {
+            name: 'first_name',
+            message: 'Enter the first name.',
+        },
+        {
+            name: 'last_name',
+            message: 'Enter the last name.',
+        },
+        {
+            type: 'rawlist',
+            name: 'role_id',
+            message: 'Choose a role.',
+            choices: roles,
+        },
+        {
+            type: 'rawlist',
+            name: 'manager_id',
+            message: 'Choose a manager.',
+            choices: managers,
+        },
+    ])
+    .then((answers) => {
+        insert('employee', answers);
+    });
+};
+
+const choices = (selection) => {
+    switch (selection) {
         case 'VIEW ALL EMPLOYEES': {
             db.query('SELECT * FROM employee', (err, employees) => {
                 console.table(employees);
@@ -40,7 +74,7 @@ const choices = (something) => {
             break;
         }
         case 'Add Employee': {
-            
+            insertEmployee();
             break;
         }
     };
@@ -52,14 +86,17 @@ const init = () => {
         message: 'Choose one of the following',
         choices: [
             'View All Employees',
+            'Add Employee',
             'View All Departments',
+            'Add Department',
             'View All Roles',
-            'Add Employee'
+            'Add Role',
+            'Quit'
         ],
-        name: 'something',
+        name: 'selection',
     })
     .then((answers) => {
-        choices(answers.something);
+        choices(answers.selection);
     });
 };
 

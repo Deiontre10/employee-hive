@@ -8,6 +8,14 @@ const db = mysql.createConnection({
     database: "employee_db",
 });
 
+const insert = (table, data) => {
+    db.query('INSERT INTO ?? SET ?', [table, data], (err) => {
+        if (err) return console.error(err);
+        console.log('\nCreated Employee\n');
+        init();
+    });
+};
+
 const choices = (something) => {
     switch (something) {
         case 'VIEW ALL EMPLOYEES': {
@@ -31,6 +39,10 @@ const choices = (something) => {
             });
             break;
         }
+        case 'Add Employee': {
+            
+            break;
+        }
     };
 };
 
@@ -39,9 +51,10 @@ const init = () => {
         type: 'rawlist',
         message: 'Choose one of the following',
         choices: [
-            'VIEW ALL EMPLOYEES',
-            'VIEW ALL DEPARTMENTS',
-            'VIEW ALL ROLES',
+            'View All Employees',
+            'View All Departments',
+            'View All Roles',
+            'Add Employee'
         ],
         name: 'something',
     })

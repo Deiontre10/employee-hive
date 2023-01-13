@@ -52,6 +52,21 @@ ON employee.manager_id = manager.id
         console.table(employees);
         init();
 };
+const chooseEmployeeRole = async () => {
+    const details = `
+SELECT
+    role.id, 
+    role.title,
+    role.salary,
+    department.name AS department
+FROM role
+JOIN department
+ON role.department_id = department.id
+    `
+        const [roles] = await db.promise().query(details);
+        console.table(roles);
+        init();
+};
 
 const insertEmployee = async () => {
     const [managers] = await selectNames('employee', 'last_name', 'id');
@@ -94,7 +109,7 @@ const choices = (selection) => {
             break;
         }
         case 'View All Roles': {
-            chooseAll('role', true);
+            chooseEmployeeRole();
             break;
         }
         case 'Add Employee': {

@@ -29,6 +29,30 @@ const selectNames = (table, name, value) => {
     return db.promise().query('SELECT ?? AS name, ?? AS value FROM ??', [name, value, table]);
 };
 
+const chooseEmployeeDetails = async () => {
+    const details = `
+SELECT
+    employee.id,
+    employee.first_name,
+    employee.last_name,
+    role.title,
+    role.salary,
+    CONCAT(
+        manager.first_name,
+        ' ',
+        manager.last_name
+    ) AS manager
+FROM employee
+JOIN role
+ON employee.role_id = role.id
+JOIN employee AS manager
+ON employee.manager_id = manager.id
+    `
+        const [employees] = await db.promise().query(details);
+        console.table(employees);
+        init();
+};
+
 const insertEmployee = async () => {
     const [managers] = await selectNames('employee', 'last_name', 'id');
     const [roles] = await selectNames('role', 'title', 'id');
@@ -62,7 +86,7 @@ const insertEmployee = async () => {
 const choices = (selection) => {
     switch (selection) {
         case 'View All Employees': {
-            chooseAll('employee', true);
+            chooseEmployeeDetails();
             break;
         }
         case 'View All Departments': {

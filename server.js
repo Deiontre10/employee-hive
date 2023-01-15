@@ -101,6 +101,28 @@ const insertEmployee = async () => {
     });
 };
 
+const updateRole = async () => {
+    const [employees] = await selectNames('employee', 'last_name', 'id');
+    const [roles] = await selectNames('role', 'title', 'id');
+    prompt([
+        {
+            type: 'rawlist',
+            name: 'id',
+            message: 'Choose a employee.',
+            choices: employees,
+        },
+        {
+            type: 'rawlist',
+            name: 'role_id',
+            message: 'Choose a role.',
+            choices: roles,
+        },
+    ])
+    .then((answers) => {
+        insert('employee', answers);
+    });
+};
+
 const insertRole = async () => {
     const [departments] = await selectNames('department', 'name', 'id');
     prompt([
@@ -164,7 +186,7 @@ const choices = (selection) => {
             break;
         }
         case 'Update Employee Role': {
-            
+            updateRole();
             break;
         }
         case 'Quit': {

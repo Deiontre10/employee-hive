@@ -12,4 +12,4 @@ Employee Hive is a powerful departmental management system utilizing MySQL and n
 
 ## Visuals
 
-![A main image](assets/images/main.png "Splash Screen")
+![A main image](images/main.png "Splash Screen")

@@ -1,7 +1,7 @@
 # employee-hive
 
 [Link to my project](https://github.com/Deiontre10/employee-hive)
-[Link to demo video]()
+[Link to demo video](https://watch.screencastify.com/v/aNCMKI8thlfn6wAAa110)
 
 ## Table of Contents
 - [Description](#description)

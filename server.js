@@ -101,6 +101,29 @@ const insertEmployee = async () => {
     });
 };
 
+const insertRole = async () => {
+    const [departments] = await selectNames('department', 'name', 'id');
+    prompt([
+        {
+            name: 'title',
+            message: 'Enter the name of the role.',
+        },
+        {
+            name: 'salary',
+            message: 'Enter a salary for this role.',
+        },
+        {
+            type: 'rawlist',
+            name: 'department_id',
+            message: 'Choose a department.',
+            choices: departments,
+        },
+    ])
+    .then((answers) => {
+        insert('role', answers);
+    });
+};
+
 const choices = (selection) => {
     switch (selection) {
         case 'View All Employees': {
@@ -124,12 +147,15 @@ const choices = (selection) => {
             break;
         }
         case 'Add Role': {
-            
+            insertRole();
             break;
         }
         case 'Update Employee Role': {
             
             break;
+        }
+        case 'Quit': {
+            process.exit(0);
         }
     };
 };

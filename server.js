@@ -41,12 +41,15 @@ SELECT
         manager.first_name,
         ' ',
         manager.last_name
-    ) AS manager
+    ) AS manager,
+    department.name AS department
 FROM employee
 JOIN role
 ON employee.role_id = role.id
 JOIN employee AS manager
 ON employee.manager_id = manager.id
+JOIN department
+ON role.department_id = department.id
     `
         const [employees] = await db.promise().query(details);
         console.table(employees);
@@ -116,6 +119,18 @@ const choices = (selection) => {
             insertEmployee();
             break;
         }
+        case 'Add Department': {
+            
+            break;
+        }
+        case 'Add Role': {
+            
+            break;
+        }
+        case 'Update Employee Role': {
+            
+            break;
+        }
     };
 };
 
@@ -130,6 +145,7 @@ const init = () => {
             'Add Department',
             'View All Roles',
             'Add Role',
+            'Update Employee Role',
             'Quit'
         ],
         name: 'selection',

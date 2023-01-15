@@ -124,6 +124,19 @@ const insertRole = async () => {
     });
 };
 
+const insertDepartment = async () => {
+    prompt([
+        {
+            name: 'name',
+            message: 'Enter the name of the department.',
+        },
+        
+    ])
+    .then((answers) => {
+        insert('department', answers);
+    });
+};
+
 const choices = (selection) => {
     switch (selection) {
         case 'View All Employees': {
@@ -143,7 +156,7 @@ const choices = (selection) => {
             break;
         }
         case 'Add Department': {
-            
+            insertDepartment();
             break;
         }
         case 'Add Role': {
